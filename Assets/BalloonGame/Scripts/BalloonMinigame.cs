@@ -5,11 +5,9 @@ using UnityEngine.UI;
 public class BalloonMinigame : Minigame
 {
     [SerializeField] private float playTime = 60f;
-    [Header("Game Components")]
-    [SerializeField] private GameObject balloonGun;
-    [SerializeField] private GameObject balloonSpawner;
     [Header("UI")]
     [SerializeField] private GameObject postgameScreen;
+    [SerializeField] private GameObject ingameParent;
     [SerializeField] private Text timerLabel;
     [SerializeField] private Text scoreLabel;
     [SerializeField] private Text postGameScoreLabel;
@@ -47,6 +45,16 @@ public class BalloonMinigame : Minigame
         ToggleGameComponents();
     }
 
+    public void Exit()
+    {
+        ARManager.EndCurrentGame();
+        Balloon[] balloons = FindObjectsOfType<Balloon>();
+        foreach (Balloon balloon in balloons)
+            Destroy(balloon.gameObject);
+        
+        Destroy(gameObject);
+    }
+
     private void ResetGameLabels()
     {
         _currentScore = 0;
@@ -58,8 +66,7 @@ public class BalloonMinigame : Minigame
 
     private void ToggleGameComponents()
     {
-        balloonGun.SetActive(!GameOver);
-        balloonSpawner.SetActive(!GameOver);
+        ingameParent.SetActive(!GameOver);
         postgameScreen.SetActive(GameOver);
     }
 

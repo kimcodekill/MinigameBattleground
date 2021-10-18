@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dfde4ae9e9b92442ace37cc89342f8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smokeSystem: {fileID: 0}
+  smokeSystem: {fileID: 1975141522878942883, guid: 1b9f4316433b24e92be0a740990a1e4d, type: 3}
   speed: {x: 2, y: 0.6, z: 2}
   value: 1
 --- !u!65 &442920778960036876

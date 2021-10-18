@@ -8,15 +8,18 @@ public class Balloon : MonoBehaviour
 
     void Update()
     {
-        if (!BalloonMinigame.GameOver)
+        if (BalloonMinigame.GameOver)
         {
-            transform.Translate(Vector3.up * (Time.deltaTime * speed.y));
-
-            float xSpeed = Mathf.PingPong(Time.time, speed.x) - speed.x / 2;
-            float zSpeed = Mathf.PingPong((Time.time + 1), speed.z) - speed.z / 2;
-            transform.Translate(Vector3.left * (Time.deltaTime * xSpeed));
-            transform.Translate(Vector3.forward * (Time.deltaTime * zSpeed));
+            Destroy(gameObject);
+            return;
         }
+
+        transform.Translate(Vector3.up * (Time.deltaTime * speed.y));
+
+        float xSpeed = Mathf.PingPong(Time.time, speed.x) - speed.x / 2;
+        float zSpeed = Mathf.PingPong((Time.time + 1), speed.z) - speed.z / 2;
+        transform.Translate(Vector3.left * (Time.deltaTime * xSpeed));
+        transform.Translate(Vector3.forward * (Time.deltaTime * zSpeed));    
     }
 
     public int Shoot(RaycastHit hit)
