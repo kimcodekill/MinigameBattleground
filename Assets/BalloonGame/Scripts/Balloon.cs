@@ -2,14 +2,13 @@ using UnityEngine;
 
 public class Balloon : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem smokeSystem;
     [SerializeField] private Vector3 speed; 
-    [SerializeField] private float value;
-
-    public float Value => value;
+    [SerializeField] private int value;
 
     void Update()
     {
-        if (!GameController.gameOver)
+        if (!BalloonMinigame.GameOver)
         {
             transform.Translate(Vector3.up * (Time.deltaTime * speed.y));
 
@@ -18,6 +17,14 @@ public class Balloon : MonoBehaviour
             transform.Translate(Vector3.left * (Time.deltaTime * xSpeed));
             transform.Translate(Vector3.forward * (Time.deltaTime * zSpeed));
         }
+    }
+
+    public int Shoot(RaycastHit hit)
+    {
+        ParticleSystem ps = Instantiate(smokeSystem, hit.point, Quaternion.LookRotation(hit.normal));
+        Destroy(ps.gameObject, 5f);
+        Destroy(gameObject);
+        return value;
     }
 
     private void OnTriggerEnter(Collider other)

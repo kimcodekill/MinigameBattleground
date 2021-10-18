@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class MinigameManager : MonoBehaviour
 {
-    [SerializeField] private GameObject minigamePrefab;
+    [SerializeField] private Minigame minigamePrefab;
     [SerializeField] private GameObject introPanel;
     [SerializeField] private GameObject gameParent;
     
     private Camera _camera;
-    
+
     public bool IsPlaying { get; private set; }
 
     private void Awake()

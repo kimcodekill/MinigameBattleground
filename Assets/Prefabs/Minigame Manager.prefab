@@ -437,7 +437,7 @@ GameObject:
   - component: {fileID: 6369500801089606805}
   - component: {fileID: 4725654520131459764}
   m_Layer: 0
-  m_Name: Minigame
+  m_Name: Minigame Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
