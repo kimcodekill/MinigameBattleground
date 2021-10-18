@@ -1,18 +1,23 @@
+using TMPro;
 using UnityEngine;
 
 public class MinigameManager : MonoBehaviour
 {
-    [SerializeField] private GameObject minigamePrefab;
+    [SerializeField] private Minigame minigamePrefab;
     [SerializeField] private GameObject introPanel;
     [SerializeField] private GameObject gameParent;
+    [SerializeField] private MeshFilter titleMeshFilter;
+    [SerializeField] private TextMeshProUGUI descriptionLabel;
     
     private Camera _camera;
-    
+
     public bool IsPlaying { get; private set; }
 
     private void Awake()
     {
         _camera = Camera.main;
+        titleMeshFilter.mesh = minigamePrefab.TitleMesh;
+        descriptionLabel.text = minigamePrefab.Description;
     }
 
     void Update()
@@ -41,6 +46,6 @@ public class MinigameManager : MonoBehaviour
     {
         IsPlaying = true;
         introPanel.SetActive(false);
-        Instantiate(minigamePrefab, gameParent.transform);
+        Instantiate(minigamePrefab, gameParent.transform.position, Quaternion.identity);
     }
 }
