@@ -1,41 +1,46 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.ARFoundation;
 
 public class MinigameManager : MonoBehaviour
 {
     [SerializeField] private GameObject minigamePrefab;
+    [SerializeField] private GameObject introPanel;
+    [SerializeField] private GameObject gameParent;
     
-    private ARTrackedImageManager _imageManager;
-    private GameObject _minigameInstance;
+    private Camera _camera;
+    
+    public bool IsPlaying { get; private set; }
 
     private void Awake()
     {
-        _imageManager = GetComponent<ARTrackedImageManager>();
+        _camera = Camera.main;
     }
 
-    private void OnEnable()
+    void Update()
     {
-        _imageManager.trackedImagesChanged += OnTrackedImagesChanged;
+        if (!IsPlaying)
+            CheckStart();
     }
 
-    private void OnDisable()
+    private void CheckStart()
     {
-        _imageManager.trackedImagesChanged -= OnTrackedImagesChanged;
-    }
-
-    private void OnTrackedImagesChanged(ARTrackedImagesChangedEventArgs args)
-    {
-        if(_minigameInstance != null)
-            return;
-        
-        if (args.added.Count > 0)
+        if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
         {
-            ARTrackedImage img = args.added[0];
-            _minigameInstance = Instantiate(minigamePrefab, img.transform);
+            Ray ray = _camera.ScreenPointToRay(Input.GetTouch(0).position);
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                if (hit.transform.name.Equals("btn_play"))
+                {
+                    StartMinigame();
+                }
+            }
         }
-            
+    }
+
+    [ContextMenu("Start Minigame")]
+    private void StartMinigame()
+    {
+        IsPlaying = true;
+        introPanel.SetActive(false);
+        Instantiate(minigamePrefab, gameParent.transform);
     }
 }
